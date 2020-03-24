@@ -109,7 +109,7 @@
                               <Insets top="4.0" />
                            </FlowPane.margin>
                         </Label>
-                        <ToggleButton mnemonicParsing="false" onAction="#toggleBtnBroadcastServer" text="ON">
+                        <ToggleButton fx:id="toggleBtnBroadcast" mnemonicParsing="false" onAction="#toggleBtnBroadcastServer" text="ON">
                            <FlowPane.margin>
                               <Insets left="8.0" right="8.0" top="4.0" />
                            </FlowPane.margin>

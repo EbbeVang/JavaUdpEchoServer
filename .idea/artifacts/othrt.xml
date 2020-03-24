@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="othrt">
+    <output-path>$PROJECT_DIR$/out/artifacts/othrt</output-path>
+    <root id="root">
+      <element id="archive" name="UdpEchoServer.jar">
+        <element id="module-output" name="UdpEchoServer" />
+        <element id="library" level="project" name="lib" />
+      </element>
+    </root>
+  </artifact>
+</component>

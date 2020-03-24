@@ -2,22 +2,21 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 
 
-public class Controller implements MessageHandler {
+public class Controller {
 
-    @FXML
-    TextArea textarea;
+    // Our fxml elements we need to grab.
     @FXML
     TableView<UdpMessage> table;
     @FXML
     ToggleButton toggleBtnEcho;
+    @FXML
+    ToggleButton toggleBtnBroadcast;
 
-    private boolean isBroadcasting = true;
-    private boolean isListening = true;
     private UdpConnector udpConnector;
+    private UdpBroadcastServer broadcastServer;
 
     public void toggleBtnEchoServer()
     {
@@ -39,6 +38,16 @@ public class Controller implements MessageHandler {
     public void toggleBtnBroadcastServer()
     {
         System.out.println("togglebtnBROADCAST clicked");
+        if (broadcastServer.isBroadcast())
+        {
+            broadcastServer.setBroadcast(false);
+            toggleBtnBroadcast.setText("OFF");
+        }
+        else
+        {
+            startBroadcasting();
+            toggleBtnBroadcast.setText(("ON"));
+        }
     }
 
     public void clearLog()
@@ -51,19 +60,22 @@ public class Controller implements MessageHandler {
         System.out.println("initialize");
 
         startUdpConnection();
+        startBroadcasting();
+    }
 
+    private void startBroadcasting() {
+        broadcastServer = new UdpBroadcastServer();
+        new Thread(broadcastServer).start();
     }
 
     private void startUdpConnection() {
+        if (udpConnector != null) udpConnector.closeSocket();
         udpConnector = new UdpConnector(this);
         new Thread(udpConnector).start();
     }
 
-    @Override
     public void receiveMessage(UdpMessage udpMessage)
     {
         table.getItems().add(0, udpMessage);
     }
-
-
 }
